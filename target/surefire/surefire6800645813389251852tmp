@@ -1,7 +1,0 @@
-#surefire
-#Sun Sep 08 14:41:33 BRT 2024
-maven.ext.class.path=C\:\\Program Files\\NetBeans 8.1\\java\\maven-nblib\\netbeans-eventspy.jar
-user.dir=C\:\\Users\\igord\\OneDrive\\Documentos\\NetBeansProjects\\crud-funcionarios
-file.encoding=UTF-8
-localRepository=C\:\\Users\\igord\\.m2\\repository
-basedir=C\:\\Users\\igord\\OneDrive\\Documentos\\NetBeansProjects\\crud-funcionarios
