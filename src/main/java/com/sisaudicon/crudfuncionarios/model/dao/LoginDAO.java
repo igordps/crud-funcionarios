@@ -15,7 +15,7 @@ import java.sql.ResultSet;
  */
 public class LoginDAO {
     
-    public boolean salvar(Login login) throws SQLException {
+    public boolean inserir(Login login) throws SQLException {
         String sql = "INSERT INTO login (nome, email, senha) VALUES (?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -53,6 +53,18 @@ public class LoginDAO {
                 return null;
             }
         }
-    }    
+    }
+    
+    public boolean isEmailCadastrado(String email) throws SQLException {
+        String sql = "SELECT EXISTS (select 1 from login where email = ? )";
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {     
+                rs.next();
+                return rs.getBoolean(1);
+            }
+        }        
+    }
     
 }

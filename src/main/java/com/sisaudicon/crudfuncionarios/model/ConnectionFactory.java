@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sisaudicon.crudfuncionarios.model;
 
 import java.sql.Connection;
@@ -32,6 +27,15 @@ public class ConnectionFactory {
         String password = props.getProperty("db.password");
 
         return DriverManager.getConnection(url, username, password);
+    }    
+    
+    public static boolean validarConexao() {
+        try (Connection conn = getConnection()) {
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }    
     
 }

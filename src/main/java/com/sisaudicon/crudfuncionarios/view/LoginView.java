@@ -1,6 +1,7 @@
 package com.sisaudicon.crudfuncionarios.view;
 
 import com.sisaudicon.crudfuncionarios.controller.LoginController;
+import com.sisaudicon.crudfuncionarios.model.ConnectionFactory;
 import com.sisaudicon.crudfuncionarios.model.Login;
 import javax.swing.JOptionPane;
 
@@ -16,8 +17,10 @@ public class LoginView extends javax.swing.JFrame {
      * Creates new form LoginView
      */
     public LoginView() {
-        controller = new LoginController();
         initComponents();
+        validarConexao();
+
+        controller = new LoginController();
     }
 
     /**
@@ -88,6 +91,11 @@ public class LoginView extends javax.swing.JFrame {
         jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldEmail.setBorder(null);
+        jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldEmailActionPerformed(evt);
+            }
+        });
 
         jButtonEntrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone_entrar.png"))); // NOI18N
@@ -221,13 +229,11 @@ public class LoginView extends javax.swing.JFrame {
             Login login = controller.buscarLogin(jTextFieldEmail.getText(), jPasswordFieldSenha.getText());
 
             if (login != null) {
-                //Abre tela Cadastro de Funcionário:
                 FuncionarioView funcionarioView = new FuncionarioView();
                 funcionarioView.setVisible(true);
-                dispose();                
+                dispose();
             } else {
-                //Exibe alerta de login não encontrado
-                JOptionPane.showMessageDialog(rootPane, "Login não encontrado, verifique as informações digitadas!", "Login não encontrado", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, "Verifique a senha informada!", "Senha incorreta", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -243,7 +249,7 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelCloseMousePressed
 
     private void jPasswordFieldSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldSenhaActionPerformed
-        // TODO add your handling code here:
+        jButtonEntrar.requestFocusInWindow();
     }//GEN-LAST:event_jPasswordFieldSenhaActionPerformed
 
     private void jButtonCadastreSeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastreSeActionPerformed
@@ -252,6 +258,10 @@ public class LoginView extends javax.swing.JFrame {
         loginDialog.setVisible(true);
         jTextFieldEmail.requestFocusInWindow();
     }//GEN-LAST:event_jButtonCadastreSeActionPerformed
+
+    private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
+        jPasswordFieldSenha.requestFocusInWindow();
+    }//GEN-LAST:event_jTextFieldEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,6 +325,22 @@ public class LoginView extends javax.swing.JFrame {
             return false;
         }
 
-        return true;
+        try {
+            if (!controller.isEmailCadastrado(jTextFieldEmail.getText())) {
+                JOptionPane.showMessageDialog(rootPane, "E-mail não cadastrado!", "Login não encontrado", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void validarConexao() {
+        if (!ConnectionFactory.validarConexao()) {
+            JOptionPane.showMessageDialog(this, "Erro ao conectar com o banco de dados!", "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
     }
 }

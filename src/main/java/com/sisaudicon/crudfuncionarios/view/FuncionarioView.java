@@ -305,7 +305,7 @@ public class FuncionarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        if (validacoesAdicionarFuncionario()) {
+        if (validacoesPreenchimentoFormulario()) {
             try{                
                 Funcionario funcionario = getFuncionarioByFormulario();
                 controller.inserirFuncionario(funcionario);
@@ -319,7 +319,7 @@ public class FuncionarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        if (model != null && validacoesAdicionarFuncionario()) {
+        if (model != null && validacoesPreenchimentoFormulario()) {
             try {
                 Funcionario funcionario = getFuncionarioByFormulario();
                 funcionario.setId(model.getId());
@@ -417,7 +417,7 @@ public class FuncionarioView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldValorSalario;
     // End of variables declaration//GEN-END:variables
 
-    private boolean validacoesAdicionarFuncionario() {
+    private boolean validacoesPreenchimentoFormulario() {
         if (jTextFieldNome.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Preenchimento do campo Nome é obrigatório!", "Informe o Nome", JOptionPane.WARNING_MESSAGE);
             return false;

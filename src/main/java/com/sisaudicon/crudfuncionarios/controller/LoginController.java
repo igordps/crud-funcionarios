@@ -2,27 +2,24 @@ package com.sisaudicon.crudfuncionarios.controller;
 
 import com.sisaudicon.crudfuncionarios.model.Login;
 import com.sisaudicon.crudfuncionarios.model.dao.LoginDAO;
+import java.sql.SQLException;
 
 /**
  *
  * @author igord
  */
 public class LoginController {
-    
+
     private final LoginDAO dao;
 
     public LoginController() {
         dao = new LoginDAO();
     }
 
-    public boolean salvarLogin(String nome, String email, String senha) {
+    public boolean inserir(String nome, String email, String senha) throws SQLException {
         Login login = new Login(nome, email, senha);
-        try {
-            return dao.salvar(login);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+
+        return dao.inserir(login);
     }
 
     public Login buscarLogin(String email, String senha) {
@@ -32,6 +29,10 @@ public class LoginController {
             e.printStackTrace();
             return null;
         }
-    }    
-    
+    }
+
+    public boolean isEmailCadastrado(String email) throws SQLException {
+        return dao.isEmailCadastrado(email);
+    }
+
 }

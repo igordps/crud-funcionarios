@@ -162,7 +162,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         if (validacoesAdicionarLogin()) {
             try {
-                controller.salvarLogin(jTextFieldNome.getText(), jTextFieldEmail.getText(), jPasswordFieldSenha.getText());
+                controller.inserir(jTextFieldNome.getText(), jTextFieldEmail.getText(), jPasswordFieldSenha.getText());
                 JOptionPane.showMessageDialog(rootPane, "Login cadastrado com sucesso!", "Mensagem do Sistema", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } catch (Exception e) {
